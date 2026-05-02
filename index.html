@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday My Love</title>
+
+<style>
+
+/* 🌸 BODY */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#ffe6f0,#ffd6e8,#fff0f5);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 🌸 BACKGROUND FLOWERS */
+body::before {
+    content: "";
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,182,193,0.6) 2px, transparent 3px),
+        radial-gradient(circle at 40% 70%, rgba(255,105,180,0.4) 3px, transparent 4px),
+        radial-gradient(circle at 80% 60%, rgba(255,192,203,0.5) 2px, transparent 3px);
+    background-size: 140px 140px;
+    animation: moveBg 35s linear infinite;
+    z-index: 0;
+}
+
+@keyframes moveBg {
+    from { transform: translate(0,0); }
+    to { transform: translate(-120px,-120px); }
+}
+
+/* 🌸 REAL SAKURA PETALS */
+.petal {
+    position: absolute;
+    top: -10vh;
+    width: 18px;
+    height: 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffb6c1' d='M50 0 C60 20, 80 20, 70 45 C90 50, 90 80, 60 80 C55 95, 45 95, 40 80 C10 80, 10 50, 30 45 C20 20, 40 20, 50 0Z'/%3E%3C/svg%3E");
+    background-size: cover;
+    opacity: 0.9;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-10vh) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) translateX(80px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* 💖 CARD (UNCHANGED) */
+.card {
+    position: relative;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(20px);
+    padding: 50px 40px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 0 60px rgba(255,105,180,0.4);
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+h1 { color: #ff4d88; margin: 0; }
+h2 { color: #ff66a3; margin: 0; }
+
+.message {
+    color: #444;
+    margin: 15px 0 25px 0;
+    line-height: 1.6;
+}
+
+/* 🎂 CAKE */
+.cake {
+    position: relative;
+    width: 160px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.layer {
+    height: 45px;
+    border-radius: 12px;
+    margin: 6px 0;
+    box-shadow: inset 0 -6px rgba(0,0,0,0.25);
+}
+
+.top { background: linear-gradient(#4b2e2e,#2b1a1a); }
+.middle { background: linear-gradient(#5a3825,#3b2418); }
+.bottom { background: linear-gradient(#3a1f1f,#1f1212); }
+
+/* 🕯️ CANDLE */
+.candle {
+    width: 12px;
+    height: 30px;
+    background: linear-gradient(#fff,#ffd9a6);
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.candle::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 18px;
+    background: radial-gradient(circle,#fff 20%,#ffcc00 60%,#ff6600 100%);
+    border-radius: 50%;
+    animation: flicker 0.2s infinite alternate;
+}
+
+@keyframes flicker {
+    from { transform: translateX(-50%) scale(1); }
+    to { transform: translateX(-50%) scale(1.2); }
+}
+
+/* 💫 BUTTON */
+button {
+    background: linear-gradient(45deg,#ff4d88,#ff99cc);
+    border: none;
+    padding: 12px 20px;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button:hover { transform: scale(1.1); }
+
+</style>
+</head>
+
+<body>
+
+<!-- 🌸 SAKURA PETALS CONTAINER -->
+<div id="petal-container"></div>
+
+<audio id="loveSong" loop>
+    <source src="Rico Blanco - Your Universe (Lyrics_Letra).mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+    <h1>Happy Birthday</h1>
+    <h2>My Love Cristine 💖</h2>
+
+    <div class="message">
+        <p>To the most beautiful girl in my world 🌸</p>
+        <p>You make every moment feel happy, warm, and loved ✨</p>
+        <p>I am grateful for your smile, your heart, and your love 💕</p>
+        <p><b>I love you mylove, Cristine 💖</b></p>
+    </div>
+
+    <div class="cake">
+        <div class="candle"></div>
+        <div class="layer top"></div>
+        <div class="layer middle"></div>
+        <div class="layer bottom"></div>
+    </div>
+
+    <button onclick="startExperience()">Make a Wish 💫</button>
+</div>
+
+<script>
+
+// 🌸 CREATE REALISTIC FALLING PETALS
+const container = document.getElementById("petal-container");
+
+for (let i = 0; i < 25; i++) {
+    let petal = document.createElement("div");
+    petal.classList.add("petal");
+
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.animationDuration = (5 + Math.random() * 5) + "s";
+    petal.style.opacity = Math.random();
+    petal.style.transform = `scale(${0.6 + Math.random()})`;
+
+    container.appendChild(petal);
+}
+
+function startExperience() {
+    const song = document.getElementById("loveSong");
+    song.play();
+
+    document.querySelector('.candle').style.opacity = '0';
+
+    alert("Close your eyes and make a wish... 💖🌸");
+}
+
+</script>
+
+</body>
+</html>
